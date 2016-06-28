@@ -1,8 +1,15 @@
+/*
+ * Given two numbers represented as LinkedList return the sum of them by a number
+ * represented as a LinkedList. Do this for when the first element is the most
+ * significant number and least significant. 
+ */
 package challenges.linkedList;
 
 import dataStructures.linkedList.Node;
 
 public class SumLinkedList {
+	
+	private static int carry;
 
 	// 5 Add two linked lists in forward and reverse order
 	public static void test() {
@@ -15,80 +22,148 @@ public class SumLinkedList {
 						   + ", "
 						   + num2.toString()
 						   + "): "
-						   + sumLinkedListedReverse(num1, num2));
+						   + sumReverse(num1, num2).toString());
 		System.out.println("5. sumLinkedListedForward("
 						   + num1.toString()
 						   + ", "
 						   + num2.toString()
 						   + "): "
-						   + sumLinkedListForward(num1, num2));
+						   + sumForward(num1, num2).toString());
 	}
 
-	/*
-	 * Return 10^(length of list)
-	 */
-	public static int getPower(Node<Integer> head) {
-		Node<Integer> tmp = head;
-		int power = 1;
-		while (tmp.next != null) {
-			power *= 10;
-			tmp = tmp.next;
+	public static <E> int length(Node<E> head) {
+		int count = 0;
+		while (head != null) {
+			++count;
+			head = head.next;
 		}
-		return power;
+		
+		return count;
 	}
 	
 	/*
-	 * Last number in list is Most Significant s.t 7->1->6 = 617
+	 * Append 0s to tail of list (most siginificant lists) to align.
 	 */
-	public static int sumLinkedListedReverse(Node<Integer> head1, Node<Integer> head2) {
-		int num1 = 0;
-		int num2 = 0;
-		int power1 = getPower(head1);
-		int power2 = getPower(head2);
-		Node<Integer> tmp;
-		
-		tmp = head1;
-		for (int i=1; i<=power1; i *= 10) {
-			num1 += tmp.data*i;
-			tmp = tmp.next;
+	public static void padReverse(Node<Integer> head, int amount) {
+		while (head.next != null) {
+			head = head.next;
 		}
 		
-		tmp = head2;
-		for (int i=1; i<=power2; i *= 10) {
-			num2 += tmp.data*i;
-			tmp = tmp.next;
+		for (int i=0; i<amount; ++i) {
+			head.next = new Node<Integer>();
+			head = head.next;
+			head.data = 0;
 		}
-		
-		return num1 + num2;
 	}
-
-	/*
-	 * First number in list is Most Significant s.t 7->1->6 = 716
-	 */
-	public static int sumLinkedListForward(Node<Integer> head1, Node<Integer> head2) {
-		int power1 = 1;
-		int power2 = 1;
-		int num1 = 0;
-		int num2 = 0;
-
-		power1 = getPower(head1);
-		power2 = getPower(head2);
 	
-		Node<Integer> tmp = head1;
-		while (power1 != 0) {
-			num1 += tmp.data * power1;
-			power1 /= 10;
-			tmp = tmp.next;
+	/*
+	 * Wrapper to sumReverse with carry argument. The least significant bit is
+	 * the head of list where the number is read in reverse. 
+	 */
+	public static Node<Integer> sumReverse(Node<Integer> l1, Node<Integer> l2) {
+		if (l1 == null && l2 == null) {
+			return null;
 		}
 
-		tmp = head2;
-		while (power2 != 0) {
-			num2 += tmp.data * power2;
-			power2 /= 10;
-			tmp = tmp.next;
+		Node<Integer> sum = new Node<Integer>();
+		int length1 = length(l1);
+		int length2 = length(l2);
+		
+		if (length1 < length2) {
+			padReverse(l1, length2-length1);
+		} else if (length2 < length1) {
+			padReverse(l2, length1-length2);
 		}
 
-		return num1 + num2;
+		sum = sumReverse(l1, l2, 0);
+		return sum;
 	}
+	
+	/*
+	 * Return a linkedlist of the sum of two numbers represented by a
+	 * linkedlist where the head is the least significant (one's place).
+	 */
+	private static Node<Integer> sumReverse(Node<Integer> l1,
+									 Node<Integer> l2,
+									 int carry) {
+		if (l1 == null && l2 == null && carry == 0)
+			return null; 	// create end of sum's linkedlist
+		
+		Node<Integer> thisSum = new Node<Integer>();
+		int value = 0;
+		
+		if (l1 != null) {
+			value += l1.data;
+		}
+		
+		if (l2 != null) {
+			value += l2.data;
+		}
+		
+		value += carry;
+		thisSum.data = value%10;
+		thisSum.next = sumReverse(l1.next, l2.next, value/10);
+		
+		return thisSum;
+	}
+	
+	public static Node<Integer> padFoward(Node<Integer> head, int amount) {
+		Node<Integer> padNode;
+		for (int i=0; i<amount; ++i) {
+			padNode = new Node<Integer>();
+			padNode.data = 0;
+			padNode.next = head;
+			head = padNode;
+		}
+
+		return head;
+	}
+	
+	public static Node<Integer> sumForward(Node<Integer> l1, Node<Integer> l2) {
+		if (l1 == null && l2 == null) {
+			return null;
+		}
+		
+		Node<Integer> summedList;
+		int length1 = length(l1);
+		int length2 = length(l2);
+
+		if (length1 < length2) {
+			l1 = padFoward(l1, length2 - length1);
+		} else if (length2 < length1) {
+			l2 = padFoward(l2, length1 - length2);
+		}
+
+		carry = 0;
+		summedList = sum(l1, l2);
+		
+		if (carry > 0) {
+			Node<Integer> carryOver = new Node<Integer>();
+			carryOver.data = carry;
+			carryOver.next = summedList;
+			summedList = carryOver;
+			carry = 0;
+		}
+
+		return summedList;
+	}
+	
+	private static Node<Integer> sum(Node<Integer> l1, Node<Integer> l2) {
+		if (l1 == null && l2 == null) {
+			return null; 	// create tail of linkedlist
+		}
+		
+		Node<Integer> thisSum = new Node<Integer>();
+		int value = 0;
+		thisSum.next = sum(l1.next, l2.next);
+		
+		value = l1.data;
+		value += l2.data;
+		value += carry;
+		carry = value/10;
+		thisSum.data = value%10;
+		return thisSum;
+	}
+	
 
 }

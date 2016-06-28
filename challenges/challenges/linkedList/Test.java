@@ -11,10 +11,10 @@ public class Test {
 		RemoveDups.test();
 		GetKthNode.test();
 		DeleteNode.test();
-		PartitionLinkedList.test();
+		Partition.test();
 		SumLinkedList.test();
-		GetLinkedListLoop.test();
-		IsLinkedListPalindrome.test();
+		GetLoop.test();
+		IsPalindrome.test();
 		
 	}
 }

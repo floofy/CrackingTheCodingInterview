@@ -1,3 +1,6 @@
+/*
+ * Sort a stack with only one other stack as a data structure. 
+ */
 package challenges.stacksAndQueues;
 
 import java.util.Stack;
@@ -20,10 +23,9 @@ public class SortStack {
 	}
 	
 	/*
-	 * Sorts stacks s.t that biggest element is at the top. This is done by
-	 * grabbing the top of the original stack and putting it in the correct
-	 * place in s2. All elements > the top will be pushed back onto s1 but
-	 * will not go through inner while loop again because those are ordered.
+	 * Returns a storted stack where it uses 1 other stack s2 as a buffer. All
+	 * elements from original stack are popped onto the correct place in s2
+	 * where all elements in s2 that are > s1.pop() are moved back into s1. 
 	 */
     public static Stack<Integer> sortStack(Stack<Integer> s1) {
     	if (s1 == null) {

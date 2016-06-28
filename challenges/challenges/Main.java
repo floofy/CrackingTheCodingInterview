@@ -1,9 +1,6 @@
 package challenges;
 
 public class Main {
-
-	public Main() {
-	}
 	
 	public static void main(String[] args) {
 		challenges.arraysAndStrings.Test.test();

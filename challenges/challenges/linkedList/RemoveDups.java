@@ -1,3 +1,6 @@
+/*
+ * Given head of linkedlist remove all nodes that have duplicate values.
+ */
 package challenges.linkedList;
 
 import java.util.HashSet;

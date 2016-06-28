@@ -1,3 +1,6 @@
+/*
+ * Return a string of with letters and number of occurrences or original string. 
+ */
 package challenges.arraysAndStrings;
 
 public class CompressString {

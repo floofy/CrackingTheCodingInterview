@@ -1,3 +1,6 @@
+/*
+ * Return the kth to last Node in a linked list give the head. 
+ */
 package challenges.linkedList;
 
 import dataStructures.linkedList.Node;
@@ -15,7 +18,6 @@ public class GetKthNode {
 	/*
 	 * Where k=1 is the last element. Works by having two pointers in list k
 	 * distance apart so we get the kth element when later pointer reaches null.
-	 * 
 	 */
 	public static <E> Node<E> getKthNode(Node<E> head, int k) {
 		if (head == null)

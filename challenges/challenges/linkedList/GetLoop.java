@@ -1,10 +1,13 @@
+/*
+ * Print out the start of a loop in a LinkedList if there is one. 
+ */
 package challenges.linkedList;
 
 import java.util.HashSet;
 
 import dataStructures.linkedList.Node;
 
-public class GetLinkedListLoop {
+public class GetLoop {
 
 	// 6 Print beginning of loop
 	public static void test() {

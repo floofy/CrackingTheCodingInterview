@@ -1,24 +1,27 @@
+/*
+ * Return true or false if a linkedlist is a palindrome
+ */
 package challenges.linkedList;
 
 import java.util.Stack;
 
 import dataStructures.linkedList.Node;
 
-public class IsLinkedListPalindrome {
+public class IsPalindrome {
 
 	public static void test() {
 		Integer[] palindrome = {1 ,2 ,3 ,4 ,3 ,2 ,1};
 		Node<Integer> n = new Node<Integer>(palindrome);
 		System.out.println("7. isLinkedListPalindrome("
 						   + n.toString() + "): "
-						   +  isLinkedListPalindrome(n));
+						   +  isPalindrome(n));
 	}
 
 	/*
 	 * Use fast and slow pointer adding first half of list to a stack, then
 	 * comparing it consecutively when the slow pointers moves from half to end.
 	 */
-	public static <E> boolean isLinkedListPalindrome(Node<E> head) {
+	public static <E> boolean isPalindrome(Node<E> head) {
 		if (head == null)
 			return false;
 		else if (head.next == null)

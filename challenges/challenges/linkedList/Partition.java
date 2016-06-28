@@ -1,8 +1,11 @@
+/*
+ * Partition a linkedlist where all numbers < x are before x it. 
+ */
 package challenges.linkedList;
 
 import dataStructures.linkedList.Node;
 
-public class PartitionLinkedList {
+public class Partition {
 
 	// 4 partition nodes before and after x
 	public static void test() {
@@ -14,14 +17,14 @@ public class PartitionLinkedList {
 						 + ", "
 						 + value
 						 + "): ");
-		Node<Integer> partitioned = partitionLinkedList(n, value);
+		Node<Integer> partitioned = partition(n, value);
 		System.out.println(partitioned.toString());
 	}
 	
 	/*
 	 * Create a less and large linkedlist then join the linked lists with value.
 	 */
-	public static Node<Integer> partitionLinkedList(Node<Integer> head, Integer value) {
+	public static Node<Integer> partition(Node<Integer> head, Integer value) {
 		if (head == null || head.next == null)
 			return null;
 		
