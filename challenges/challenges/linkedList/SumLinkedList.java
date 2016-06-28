@@ -13,8 +13,8 @@ public class SumLinkedList {
 
 	// 5 Add two linked lists in forward and reverse order
 	public static void test() {
-		Integer[] array1 = {7, 1, 6};
-		Integer[] array2 = {5, 9, 2};
+		Integer[] array1 = {9 ,9};
+		Integer[] array2 = {9, 9};
 		Node<Integer> num1 = new Node<Integer>(array1);
 		Node<Integer> num2 = new Node<Integer>(array2);
 		System.out.println("5. sumLinkedListedReverse("
@@ -42,7 +42,7 @@ public class SumLinkedList {
 	}
 	
 	/*
-	 * Append 0s to tail of list (most siginificant lists) to align.
+	 * Append 0s to tail of list (most significant lists) to align.
 	 */
 	public static void padReverse(Node<Integer> head, int amount) {
 		while (head.next != null) {
@@ -84,15 +84,15 @@ public class SumLinkedList {
 	 * linkedlist where the head is the least significant (one's place).
 	 */
 	private static Node<Integer> sumReverse(Node<Integer> l1,
-									 Node<Integer> l2,
-									 int carry) {
+									 		Node<Integer> l2,
+									 		int carry) {
 		if (l1 == null && l2 == null && carry == 0)
 			return null; 	// create end of sum's linkedlist
 		
 		Node<Integer> thisSum = new Node<Integer>();
-		int value = 0;
-		
-		if (l1 != null) {
+		int value = carry;
+
+		if (l1 != null) {	// when setting most significant to carry
 			value += l1.data;
 		}
 		
@@ -100,9 +100,10 @@ public class SumLinkedList {
 			value += l2.data;
 		}
 		
-		value += carry;
 		thisSum.data = value%10;
-		thisSum.next = sumReverse(l1.next, l2.next, value/10);
+		thisSum.next = sumReverse(l1 != null ? l1.next : null,
+								  l2 != null ? l2.next : null,
+								  value > 10 ? 1 : 0);
 		
 		return thisSum;
 	}
@@ -156,7 +157,7 @@ public class SumLinkedList {
 		Node<Integer> thisSum = new Node<Integer>();
 		int value = 0;
 		thisSum.next = sum(l1.next, l2.next);
-		
+
 		value = l1.data;
 		value += l2.data;
 		value += carry;
@@ -164,6 +165,5 @@ public class SumLinkedList {
 		thisSum.data = value%10;
 		return thisSum;
 	}
-	
 
 }

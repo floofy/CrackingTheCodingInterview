@@ -1,7 +1,6 @@
 /*
- * Given access to only the node to delete from a LinkedList, delete it. 
+ * Given access to only the node to be delete from a LinkedList, remove it. 
  */
-
 package challenges.linkedList;
 
 import dataStructures.linkedList.Node;

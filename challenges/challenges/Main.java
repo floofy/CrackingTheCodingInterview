@@ -13,7 +13,7 @@ public class Main {
 		
 		System.out.println("");
 		challenges.treesAndGraphs.Test.test();
-		
+
 		System.out.println("\n[+] Done!");
 	}
 	
