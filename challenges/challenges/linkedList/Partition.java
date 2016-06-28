@@ -42,10 +42,8 @@ public class Partition {
 		
 		Node<Integer> partitioned = less;
 		less.appendToTail(value);
-		while (less.next != null) {
-			less = less.next;
-		}
-		less.next = large;
+		less.appendToTail(large);
+
 	return partitioned;
 	}
 
