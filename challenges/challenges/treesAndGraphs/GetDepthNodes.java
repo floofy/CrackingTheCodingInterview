@@ -1,3 +1,6 @@
+/*
+ * Print out all nodes on the same level of the tree. 
+ */
 package challenges.treesAndGraphs;
 
 import java.util.LinkedList;
@@ -5,6 +8,7 @@ import dataStructures.tree.BST;
 import dataStructures.tree.TreeNode;
 
 public class GetDepthNodes {
+
 	public static void test() {
 		int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 		BST b = CreateMinimalBST.createMinimalBST(array);
@@ -27,7 +31,7 @@ public class GetDepthNodes {
 	}
 	
 	/*
-	 * Naive solution.
+	 * Naive solution. Wrapper to getDepthNodes with a printLevel argument. 
 	 */
 	public static void getDepthNodes(BST root,
 									 LinkedList<LinkedList<TreeNode>> levels) {
@@ -45,6 +49,10 @@ public class GetDepthNodes {
 		return;
 	}
 	
+	/*
+	 * Passed down a counter and prints all nodes when it equals it. For every
+	 * level, a node that was calculated has to pass down a counter again. 
+	 */
 	public static LinkedList<TreeNode> getDepthNodes(TreeNode root, int level, int printLevel) {
 		LinkedList<TreeNode> levelNodes = new LinkedList<TreeNode>();
 		if (root == null) {

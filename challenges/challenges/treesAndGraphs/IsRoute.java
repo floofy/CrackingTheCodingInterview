@@ -1,3 +1,6 @@
+/*
+ * Check if there is a route between two nodes in a directed graph. (BFS/DFS).
+ */
 package challenges.treesAndGraphs;
 
 import java.util.LinkedList;
@@ -14,9 +17,22 @@ public class IsRoute {
 		LinkedList<Integer> route = isRoute(testGraph, start, end);
 		System.out.print(route + "\n");
 	}
-	
+
 	/*
-	 * BFS algorithm to return a node in the grp
+	 * Finds if point1 is reachable. From point1 return the route to point2 and
+	 * return a list of node values from point1 to point2 or null.
+	 */
+	public static <E> LinkedList<E> isRoute(GraphNode<E> root, E point1, E point2) {
+		GraphNode<E> startNode = search(root, point1);
+		if (startNode == null) {
+			return null;
+		}
+		return getRoute(startNode, point2);
+	}
+
+
+	/*
+	 * BFS algorithm to search and return the node in a graph.
 	 */
 	public static <E> GraphNode<E> search(GraphNode<E> root, E datum) {
 		if (root.data == datum)
@@ -42,20 +58,13 @@ public class IsRoute {
 		
 		return null; // placeholder
 	}
-	
-	public static <E> LinkedList<E> isRoute(GraphNode<E> root, E point1, E point2) {
-		GraphNode<E> startNode = search(root, point1);
-		if (startNode == null) {
-			return null;
-		}
-		return getRoute(startNode, point2);
-	}
 
 	/*
-	 * Use BFS search until you find node2. Return true or false.
+	 * Use BFS search until you find node2. Visit all neighbors then the first
+	 * neighbor's neighbor's. Add the node to a LinkedList and return when
+	 * point2 is found.
 	 */
 	public static <E> LinkedList<E> getRoute(GraphNode<E> root, E point2) {
-
 		LinkedList<E> route = new LinkedList<E>();
 		LinkedList<GraphNode<E>> queue = new LinkedList<GraphNode<E>>();
 		

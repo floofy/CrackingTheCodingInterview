@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class SetOfStacks <E> {
 
-	protected ArrayList<Stack<E>> setOfStacks = new ArrayList<Stack<E>>();
+	protected ArrayList<Stack<E>> stacks = new ArrayList<Stack<E>>();
 	int elements;
 	int limit;
 
@@ -30,9 +30,9 @@ public class SetOfStacks <E> {
 	public void push(E data) {
 		int thisStackSize = elements%limit;
 		if (thisStackSize == 0) {
-			setOfStacks.add(new Stack<E>());
+			stacks.add(new Stack<E>());
 		}
-		setOfStacks.get(setOfStacks.size()-1).push(data);
+		stacks.get(stacks.size()-1).push(data);
 		elements += 1;
 	}
 
@@ -40,63 +40,85 @@ public class SetOfStacks <E> {
 	 * Opposite of push when elements % limit == 0 remove stack from ArrayList.
 	 */
 	public E pop() {
-		if (setOfStacks.size() == 0)
+		if (stacks.size() == 0)
 			return null;
 
-		E data = setOfStacks.get(setOfStacks.size()-1).pop();
+		E data = stacks.get(stacks.size()-1).pop();
 		elements -= 1;
 
 		int thisStackSize = elements%limit;
 		if (thisStackSize == 0) {
-			setOfStacks.remove(setOfStacks.size()-1);
+			stacks.remove(stacks.size()-1);
 		}
 
 		return data;
 	}
 
 	public E peek() {
-		if (setOfStacks.size() == 0)
+		if (stacks.size() == 0)
 			return null;
-		return setOfStacks.get(setOfStacks.size()-1).peek();
+		return stacks.get(stacks.size()-1).peek();
 	}
 	
 	/*
-	 * Shift all element safter stackIndex-1 left by putting the next element
+	 * Shift all elements after stackIndex-1 left by putting the next element
 	 * of the next stack to the bottom of the previous stack. 
 	 */
 	public E popAt(int stackIndex) {
-		if (stackIndex < 1 || stackIndex > this.setOfStacks.size() - 1)
+		if (stackIndex < 0 || stackIndex > this.stacks.size() - 1) // index at 0
 			return null;
 		
 		E data;
-		Stack<E> tmp = new Stack<E>();
-		Stack<E> stack = this.setOfStacks.get(stackIndex-1);
+		Stack<E> stack = this.stacks.get(stackIndex);
 		data = stack.pop();
-
-		for (int i=stackIndex-1; i<this.setOfStacks.size()-1; ++i) {
-			stack = this.setOfStacks.get(i);
-			while (stack.peek() != null) {
-				tmp.push(stack.pop());
-			}			
-			stack.push(this.setOfStacks.get(i+1).pop());
-			while (tmp.peek() != null) {
-				stack.push(tmp.pop());
-			}
-		}
 		
-		if (this.setOfStacks.get(this.setOfStacks.size()-1).peek() == null) {
-			this.setOfStacks.remove(this.setOfStacks.size()-1);
-		}
+		shiftLeft(stackIndex);
 		
 		this.elements -= 1;
 
 		return data;
 	}
 	
+	/* 
+	 * Shift all elements to the left from user's popAt index to end  by putting
+	 * the next stack's top element to the left stack's bottom to maintain
+	 * a single-like stack keeping all stacks filled except the last one.  
+	 */
+	public boolean shiftLeft(int stackIndex) {
+		if (stackIndex > stacks.size()-1) {
+			return false;
+		}
+
+		Stack<E> curStack;
+		Stack<E> buffer = new Stack<E>();
+		
+		for (int i=stackIndex; i<this.stacks.size()-1; ++i) {
+			curStack = this.stacks.get(i);
+
+			/* lift all elements off. */
+			while (curStack.peek() != null) {
+				buffer.push(curStack.pop());
+			}
+			
+			/* put next stack to bottom */
+			curStack.push(this.stacks.get(i+1).pop());
+			while (buffer.peek() != null) {
+				curStack.push(buffer.pop());
+			}
+		}
+		
+		/* Remove last stack if leftShift made it empty */
+		if (this.stacks.get(this.stacks.size()-1).size() == 0) {
+			this.stacks.remove(this.stacks.size()-1);
+		}
+
+		return true;
+	}
+	
 	public void printAllStack() {
-		for (int i=0; i<this.setOfStacks.size(); ++i) {
+		for (int i=0; i<this.stacks.size(); ++i) {
 			System.out.format("Stack %d: ", i);
-			Stack<E>stack = setOfStacks.get(i);
+			Stack<E>stack = stacks.get(i);
 			E data = stack.pop();
 			while (data != null) {
 				System.out.print(data + " ");
@@ -104,7 +126,7 @@ public class SetOfStacks <E> {
 			}
 			System.out.print('\t');
 		}
-		this.setOfStacks.clear();
+		this.stacks.clear();
 		this.elements = 0;
 		System.out.println("");
 	}
@@ -146,8 +168,9 @@ public class SetOfStacks <E> {
 		sos.push(4);
 		//sos.push(8);
 		sos.push(7);
-		Integer data = sos.popAt(2);
-		System.out.println("Testing popAt(2). Data: " + data);
+		Integer data = sos.popAt(1);
+		System.out.println("Testing popAt(1). Data: " + data);
 		sos.printAllStack();
 	}
+
  }

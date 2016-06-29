@@ -1,3 +1,6 @@
+/*
+ * Return True of False if a given tree is a BST.
+ */
 package challenges.treesAndGraphs;
 
 import dataStructures.tree.BST;
@@ -35,11 +38,17 @@ public class IsBST {
 		System.out.println(isBST(notBST));
 	}
 	
-	public static Integer[] getMinMax(TreeNode n) {
+	/*
+	 * Recursively checks the left and right subtree's minimum and maximum
+	 * values and compares them to the current value. If the left subtree's
+	 * maximum is larger or if the right subtree's minimum is less than the
+	 * current value then an array with 2 nulls i returned {null, null}.
+	 */
+	public static Integer[] checkBST(TreeNode n) {
 		Integer[] l, r;	 // minimums and maximums of left and right subtrees
 		
 		if (n.left != null) {
-			l = getMinMax(n.left);
+			l = checkBST(n.left);
 			if (l[0] == null && l[1] == null) {
 				return l;
 			}
@@ -50,7 +59,7 @@ public class IsBST {
 		}
 		
 		if (n.right != null) {
-			r = getMinMax(n.right);
+			r = checkBST(n.right);
 			if (r[0] == null && r[1] == null) {
 				return r;
 			}
@@ -74,12 +83,16 @@ public class IsBST {
 		return minMax;	
 	}
 
+	/*
+	 * Wrapper for checkBST. Returns false when an array with 2 nulls is
+	 * returned. 
+	 */
 	public static boolean isBST(TreeNode node) {
 		if (node == null) {
 			return false;
 		}
 	
-		Integer[] minMax = getMinMax(node);
+		Integer[] minMax = checkBST(node);
 		if (minMax[0] == null && minMax[1] == null) {
 			return false;
 		}

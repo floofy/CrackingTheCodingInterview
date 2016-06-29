@@ -1,3 +1,6 @@
+/*
+ * Given sorted list of numbers create a BST with minimal height.
+ */
 package challenges.treesAndGraphs;
 
 import java.util.Arrays;
@@ -12,6 +15,9 @@ public class CreateMinimalBST {
 		BST.levelOrder(b.root);
 	}
 	
+	/*
+	 * Insert elements in array into a BST data structure consecutively.
+	 */
 	public static void insertBST(BST bstTree, int[] array) {
 		for (int i: array) {
 			bstTree.insert(i);
@@ -21,30 +27,29 @@ public class CreateMinimalBST {
 	/*
 	 * From sorted set create a BST with minimal height. This is done by
 	 * recursively inserting the middle element as the root (by definition of a 
-	 * BST this will give it the most balanced tree) and getting left and right
-	 * subtrees. 
+	 * BST this will give it the most balanced tree) recursing the left and
+	 * right subtrees.
 	 */
 	public static BST createMinimalBST(int[] array) {
 		BST minBST = new BST();
+
 		if (array == null || array.length == 0) {
 			return null;
-		} else if (array.length == 1) {
+		} else if (array.length == 2) {
 			insertBST(minBST, array);
 			return minBST;
 		}
-		int middle;
-		int[] left = null;
-		int[] right = null;
 
 		int half = array.length/2;
-		middle = array[half];
-		left = Arrays.copyOfRange(array, 0, half);
-		if (half+1 != array.length) { 
-			right = Arrays.copyOfRange(array, half+1, array.length);
-		}
+		int middle = array[half];
+		int[] leftArray = null;
+		int[] rightArray = null;
+
+		leftArray = Arrays.copyOfRange(array, 0, half);
+		rightArray = Arrays.copyOfRange(array, half+1, array.length);
 		
-		BST leftTree = createMinimalBST(left);
-		BST rightTree = createMinimalBST(right);
+		BST leftTree = createMinimalBST(leftArray);
+		BST rightTree = createMinimalBST(rightArray);
 		
 		minBST.insert(middle);
 		if (leftTree != null) {

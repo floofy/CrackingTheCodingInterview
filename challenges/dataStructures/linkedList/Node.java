@@ -37,6 +37,20 @@ public class Node<E> {
 		}
 		nextNode.next = end;
 	}
+	
+	public void appendToTail(Node<E> n) {
+		if (this.data == null) {
+			this.data = n.data;
+			return;
+		}
+
+		Node<E> nextNode = this;
+
+		while (nextNode.next != null) {
+			nextNode = nextNode.next;
+		}
+		nextNode.next = n;
+	}
 
 	public String toString() {
 		String string = "";
