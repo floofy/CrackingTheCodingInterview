@@ -1,3 +1,6 @@
+/*
+ * Returns true or false if a string contains no duplicates. 
+ */
 package challenges.arraysAndStrings;
 
 public class UniqueChars {

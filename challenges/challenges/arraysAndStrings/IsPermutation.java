@@ -1,3 +1,6 @@
+/*
+ * Returns True or False if one string contains all of th letters in the other.
+ */
 package challenges.arraysAndStrings;
 
 public class IsPermutation {

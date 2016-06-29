@@ -15,6 +15,6 @@ public class Main {
 		challenges.treesAndGraphs.Test.test();
 
 		System.out.println("\n[+] Done!");
-		}
+	}
 	
 }

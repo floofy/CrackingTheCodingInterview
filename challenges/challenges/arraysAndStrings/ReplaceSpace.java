@@ -1,3 +1,7 @@
+/*
+ * Replaces all spaces in a string with %20 (except for leading and trailing
+ * spaces).
+ */
 package challenges.arraysAndStrings;
 
 public class ReplaceSpace {
