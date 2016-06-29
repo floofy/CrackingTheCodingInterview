@@ -2,19 +2,23 @@ package dataStructures.linkedList;
 
 public class Stack <E> {
 	protected Node<E> top;
+	private int size;
 
 	public Stack(E data) {
 		top = new Node<E>(data);
+		size = 1;
 	}
 	
 	public Stack() {
 		top = null;
+		size = 0;
 	}
 
 	public void push(E data) {
 		Node<E> tmp = new Node<E>(data);
 		tmp.next = top;
 		top = tmp;
+		++size;
 		return;
 	}
 
@@ -23,6 +27,7 @@ public class Stack <E> {
 			return null;
 		E data = top.data;
 		top = top.next;
+		--size;
 		return data;
 	}
 
@@ -33,7 +38,7 @@ public class Stack <E> {
 	}
 	
 	public boolean empty() {
-		return top == null ? true : false;
+		return size == 0 ? true : false;
 	}
 	
 	public static void test() {
@@ -48,6 +53,10 @@ public class Stack <E> {
 			System.out.println(b);
 			b = B.pop();
 		}
+	}
+
+	public int size() {
+		return size;
 	}
 }
 
