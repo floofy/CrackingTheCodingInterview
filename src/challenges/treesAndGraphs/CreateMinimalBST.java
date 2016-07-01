@@ -53,10 +53,10 @@ public class CreateMinimalBST {
 		
 		minBST.insert(middle);
 		if (leftTree != null) {
-			minBST.root.left = leftTree.root;
+		    BST.addLeft(minBST.root, leftTree.root);
 		}
 		if (rightTree != null) {
-			minBST.root.right = rightTree.root;
+		    BST.addRight(minBST.root, rightTree.root);
 		}
 		
 		return minBST;

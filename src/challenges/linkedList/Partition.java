@@ -1,5 +1,5 @@
 /*
- * Partition a linkedlist where all numbers < x are before x it. 
+ * Partition a LinkedList where all numbers < x are before x it. 
  */
 package challenges.linkedList;
 
@@ -22,7 +22,7 @@ public class Partition {
 	}
 	
 	/*
-	 * Create a less and large linkedlist then join the linked lists with value.
+	 * Create a less and large LinkedList then join the linked lists with value.
 	 */
 	public static Node<Integer> partition(Node<Integer> head, Integer value) {
 		if (head == null || head.next == null)
@@ -46,6 +46,5 @@ public class Partition {
 
 	return partitioned;
 	}
-
 
 }

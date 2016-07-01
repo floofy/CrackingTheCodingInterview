@@ -28,6 +28,26 @@ public class BST {
 		return this.size;
 	}
 
+	public static boolean addLeft(TreeNode cur, TreeNode insert) {
+	    if (cur == null || insert.data > cur.data) {
+	        return false;
+	    }
+	    cur.left = insert;
+	    insert.parent = cur;
+	    return true;
+	}
+	
+    public static boolean addRight(TreeNode cur, TreeNode insert) {
+        if (cur == null
+           || insert.data < cur.data
+           || (cur.left != null && cur.right != null)) {
+            return false;
+        }
+        cur.right = insert;
+        insert.parent = cur;
+        return true;
+    }
+   
 	public void insert(Integer n) {
 		if (this.root == null) {
 			this.root = new TreeNode(n);
@@ -35,30 +55,43 @@ public class BST {
 		}
 
 		TreeNode cur = root;
-		TreeNode prev = null;
 		while (true) {
 			if (n <= cur.data) {
 				if (cur.left != null) {
-					prev = cur;
 					cur = cur.left;
 				} else {
 					cur.left = new TreeNode(n);
-					cur.left.parent = prev;
+					cur.left.parent = cur;
 					break;
 				}
 			} else if (n > cur.data) {
-				if (cur.right != null) {
-					prev = cur;
-					cur = cur.right;
+			    if (cur.right != null) {
+			        cur = cur.right;
 				} else {
 					cur.right = new TreeNode(n);
-					cur.right.parent = prev; 
+					cur.right.parent = cur; 
 					break;
 				}
 			}
 		}
+
 	}
 
+	public TreeNode search(int data) {
+	    TreeNode cur = root;
+	    while (cur != null) {
+	        if (data == cur.data) {
+	            return cur;
+	        } else if (data < cur.data) {
+	            cur = cur.left;
+	        } else {
+	            cur = cur.right;
+	        }
+	    }
+
+	    return null;
+	}
+	
 	public int deleteLeftBiggest(TreeNode cur) {
 		TreeNode prev = cur;
 		TreeNode next = cur.left;
@@ -247,8 +280,21 @@ public class BST {
 		BST a = new BST(array);
 
 		testTreeTraversals(a);
+		
+		System.out.println("\nTesting parents (going all the way down right then up to root");
+		TreeNode cur = a.root;
+        while (cur.right != null) {
+            System.out.println(cur.data);
+            cur = cur.right;
+        }
+        System.out.println(cur.data);
+        System.out.println("---");
+        while (cur.parent != null) {
+            System.out.println(cur.data);
+            cur = cur.parent;
+        }
 
-		System.out.println("Deleting all from bst");
+		System.out.println("\nDeleting all from bst");
 		for (int i : array) {
 			if (!a.delete(i))
 				System.out.println(i + " does not exist in BST!");
