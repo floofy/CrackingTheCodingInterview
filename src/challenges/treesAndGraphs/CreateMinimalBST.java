@@ -4,7 +4,6 @@
 package challenges.treesAndGraphs;
 
 import java.util.Arrays;
-
 import dataStructures.tree.BST;
 
 public class CreateMinimalBST {

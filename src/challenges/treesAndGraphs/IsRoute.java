@@ -4,7 +4,6 @@
 package challenges.treesAndGraphs;
 
 import java.util.LinkedList;
-
 import dataStructures.graph.GraphNode;
 
 public class IsRoute {

@@ -1,5 +1,5 @@
 /*
- * Returns True of False if a given tree is balanced (no two leaves should be 
+ * Returns True or False if a given tree is balanced (no two leaves should be 
  * more than 2 levels apart. 
  */
 package challenges.treesAndGraphs;
